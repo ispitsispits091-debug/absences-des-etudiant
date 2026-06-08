@@ -979,39 +979,27 @@ form.addEventListener('submit', function(e) {
         const data = Object.fromEntries(formData);
         
         // Simuler un délai de traitement
-        fetch(URL, {
+        const WEBAPP_URL =
+    "https://script.google.com/macros/s/AKfycbywKK26zFzhSFSL21nlckOcFiA87uTW_r06apPLJEXlAVe58kUvv3SbNdbE_ZpCnLeu/exec";
+
+fetch(WEBAPP_URL, {
     method: "POST",
+    mode: "no-cors",
     headers: {
         "Content-Type": "text/plain"
     },
     body: JSON.stringify(data)
 })
-.then(response => response.json())
-.then(result => {
-    if (result.success) {
-        showSuccessModal(data);
-    } else {
-        throw new Error(result.error);
-    }
+.then(() => {
+    showSuccessModal(data);
 })
 .catch(error => {
     console.error(error);
     messageManager.error(
         "Erreur",
-        error.message
+        "Impossible d'enregistrer l'inscription."
     );
-});        
-    } else {
-        // Afficher les erreurs
-        const errorDetails = validation.errors.map(err => `• ${err}`).join('<br>');
-        messageManager.error(
-            '❌ Erreurs de Validation',
-            'Veuillez corriger les erreurs avant de soumettre le formulaire.',
-            errorDetails
-        );
-    }
 });
-
 // Afficher le modal de confirmation
 function showSuccessModal(data) {
     const modalTitle = document.getElementById('modalTitle');
