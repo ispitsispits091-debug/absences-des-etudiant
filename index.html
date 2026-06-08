@@ -3,7 +3,7 @@
 <html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISPITSM Marrakech - Inscription &amp; Réinscription</title>
+<title>ISPITS Marrakech - Inscription &amp; Réinscription</title>
 
 <style>
 * {
@@ -979,9 +979,34 @@ form.addEventListener('submit', function(e) {
         const data = Object.fromEntries(formData);
         
         // Simuler un délai de traitement
-        setTimeout(() => {
-            showSuccessModal(data);
-        }, 1500);
+        fetch("https://script.google.com/macros/s/AKfycbzymt05tD7_BpIjOjEXedNm1cvNG7xROuFQC6ivobj5EEOhvGC3H56rluR9M8VHQ-E/exec", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(result => {
+
+    if(result.success){
+        showSuccessModal(data);
+    } else {
+        messageManager.error(
+            "Erreur",
+            "Impossible d'enregistrer l'inscription."
+        );
+    }
+
+})
+.catch(error => {
+    console.error(error);
+
+    messageManager.error(
+        "Erreur",
+        "Erreur de connexion avec Google Sheets."
+    );
+});
         
     } else {
         // Afficher les erreurs
