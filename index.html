@@ -979,37 +979,28 @@ form.addEventListener('submit', function(e) {
         const data = Object.fromEntries(formData);
         
         // Simuler un délai de traitement
-        fetch(
-  "https://script.google.com/macros/s/AKfycbywKK26zFzhSFSL21nlckOcFiA87uTW_r06apPLJEXlAVe58kUvv3SbNdbE_ZpCnLeu/exec",
-  {
+        fetch(URL, {
     method: "POST",
-    mode: "no-cors",
     headers: {
-      "Content-Type": "text/plain"
+        "Content-Type": "text/plain"
     },
     body: JSON.stringify(data)
-  }
-)
-.then(() => {
-    showSuccessModal(data);
+})
+.then(response => response.json())
+.then(result => {
+    if (result.success) {
+        showSuccessModal(data);
+    } else {
+        throw new Error(result.error);
+    }
 })
 .catch(error => {
     console.error(error);
-
     messageManager.error(
         "Erreur",
-        "Impossible d'enregistrer l'inscription."
+        error.message
     );
-});
-.catch(error => {
-    console.error(error);
-
-    messageManager.error(
-        "Erreur",
-        "Erreur de connexion avec Google Sheets."
-    );
-});
-        
+});        
     } else {
         // Afficher les erreurs
         const errorDetails = validation.errors.map(err => `• ${err}`).join('<br>');
