@@ -1,1272 +1,759 @@
 <!DOCTYPE html>
-<!-- saved from url=(0059)file:///C:/Users/TAOUFIQ/Downloads/inscription-success.html -->
-<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISPITS Marrakech - Inscription &amp; Réinscription</title>
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f4f7fa;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-}
-
-header {
-    background: linear-gradient(135deg, #006699 0%, #004d73 100%);
-    color: white;
-    text-align: center;
-    padding: 30px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-    margin: 0 0 10px 0;
-    font-size: 2.5em;
-}
-
-header h3 {
-    margin: 10px 0;
-    font-size: 1.3em;
-    font-weight: 300;
-}
-
-header p {
-    margin: 5px 0 0 0;
-    opacity: 0.9;
-}
-
-.container {
-    max-width: 900px;
-    margin: 30px auto;
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    color: #006699;
-    border-bottom: 3px solid #006699;
-    padding-bottom: 10px;
-    margin-bottom: 25px;
-    font-size: 1.8em;
-}
-
-.section {
-    margin-bottom: 30px;
-}
-
-.section-subtitle {
-    color: #004d73;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-bottom: 15px;
-    margin-top: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.form-row.full {
-    grid-template-columns: 1fr;
-}
-
-@media (max-width: 768px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 0.95em;
-}
-
-.required::after {
-    content: " *";
-    color: #d9534f;
-    font-weight: bold;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 1em;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-}
-
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #006699;
-    box-shadow: 0 0 5px rgba(0, 102, 153, 0.3);
-}
-
-input[readonly] {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-}
-
-.error-message {
-    color: #d9534f;
-    font-size: 0.85em;
-    margin-top: 5px;
-    display: none;
-}
-
-.form-group.error .error-message {
-    display: block;
-}
-
-.form-group.error input,
-.form-group.error select {
-    border-color: #d9534f;
-    background-color: #fff5f5;
-}
-
-.info-box {
-    background: #e7f3ff;
-    border-left: 4px solid #006699;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
-.info-box strong {
-    color: #006699;
-}
-
-.button-group {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-button {
-    padding: 14px 35px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    min-width: 150px;
-}
-
-.btn-submit {
-    background: linear-gradient(135deg, #006699 0%, #004d73 100%);
-    color: white;
-}
-
-.btn-submit:hover {
-    background: linear-gradient(135deg, #004d73 0%, #003d5c 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 102, 153, 0.3);
-}
-
-.btn-reset {
-    background: #6c757d;
-    color: white;
-}
-
-.btn-reset:hover {
-    background: #5a6268;
-}
-
-/* ============= MESSAGES DE SUCCÈS ============= */
-
-/* Conteneur pour les messages */
-.message-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    max-width: 450px;
-}
-
-/* Animation d'entrée */
-@keyframes slideIn {
-    from {
-        transform: translateX(500px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Animation de sortie */
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(500px);
-        opacity: 0;
-    }
-}
-
-.message {
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideIn 0.4s ease-out;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-}
-
-.message.removing {
-    animation: slideOut 0.4s ease-in forwards;
-}
-
-/* Message de succès */
-.message.success {
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-    color: #155724;
-    border-left: 4px solid #28a745;
-}
-
-.message.success .icon {
-    font-size: 1.5em;
-    min-width: 24px;
-    animation: checkmark 0.6s ease-out;
-}
-
-@keyframes checkmark {
-    0% {
-        transform: scale(0) rotate(-45deg);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1) rotate(0deg);
-    }
-}
-
-/* Message d'erreur */
-.message.error {
-    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-    color: #721c24;
-    border-left: 4px solid #dc3545;
-}
-
-.message.error .icon {
-    font-size: 1.5em;
-    min-width: 24px;
-    animation: shake 0.5s ease-out;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-}
-
-/* Message d'avertissement */
-.message.warning {
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
-    color: #856404;
-    border-left: 4px solid #ffc107;
-}
-
-/* Message d'information */
-.message.info {
-    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-    color: #0c5460;
-    border-left: 4px solid #17a2b8;
-}
-
-.message-content {
-    flex: 1;
-}
-
-.message-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 1.05em;
-}
-
-.message-text {
-    font-size: 0.95em;
-    line-height: 1.5;
-}
-
-.message-details {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    font-size: 0.9em;
-}
-
-.message-close {
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    font-size: 1.2em;
-    padding: 0;
-    min-width: auto;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-
-.message-close:hover {
-    opacity: 1;
-}
-
-/* Modal de confirmation */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 10000;
-    animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.modal-content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    max-width: 550px;
-    width: 90%;
-    z-index: 10001;
-    animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-align: center;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-@keyframes modalSlideIn {
-    from {
-        transform: translate(-50%, -60%);
-        opacity: 0;
-        scale: 0.8;
-    }
-    to {
-        transform: translate(-50%, -50%);
-        opacity: 1;
-        scale: 1;
-    }
-}
-
-.modal-icon {
-    font-size: 5em;
-    margin-bottom: 20px;
-    animation: successBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-@keyframes successBounce {
-    0% {
-        transform: scale(0) rotate(-45deg);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1) rotate(0deg);
-    }
-}
-
-.modal-icon.success {
-    color: #28a745;
-}
-
-.modal-icon.error {
-    color: #dc3545;
-}
-
-.modal-title {
-    font-size: 1.8em;
-    color: #006699;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.modal-message {
-    color: #666;
-    margin-bottom: 20px;
-    line-height: 1.6;
-    font-size: 1.1em;
-}
-
-.modal-subtext {
-    color: #999;
-    font-size: 0.9em;
-    margin-bottom: 25px;
-}
-
-.modal-details {
-    background: #f4f7fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    text-align: left;
-    max-height: 250px;
-    overflow-y: auto;
-}
-
-.modal-detail-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.95em;
-}
-
-.modal-detail-item:last-child {
-    border-bottom: none;
-}
-
-.modal-detail-label {
-    font-weight: bold;
-    color: #006699;
-}
-
-.modal-detail-value {
-    color: #333;
-    word-break: break-word;
-    text-align: right;
-}
-
-.modal-reference {
-    background: #fff3cd;
-    border: 2px solid #ffc107;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.modal-reference-label {
-    font-size: 0.9em;
-    color: #856404;
-    margin-bottom: 5px;
-}
-
-.modal-reference-number {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #006699;
-    font-family: 'Courier New', monospace;
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.modal-buttons button {
-    min-width: 130px;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background: #6c757d;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #5a6268;
-    transform: translateY(-2px);
-}
-
-.btn-print {
-    background: #17a2b8;
-    color: white;
-}
-
-.btn-print:hover {
-    background: #138496;
-    transform: translateY(-2px);
-}
-
-/* Confetti effect */
-@keyframes confetti-fall {
-    0% {
-        transform: translateY(-10px) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-    }
-}
-
-.confetti {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    z-index: 10002;
-    pointer-events: none;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    color: #666;
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
-}
-
-@media (max-width: 600px) {
-    header h1 {
-        font-size: 1.8em;
-    }
-    
-    .container {
-        margin: 10px;
-        padding: 15px;
-    }
-    
-    .message-container {
-        left: 10px;
-        right: 10px;
-        max-width: none;
-    }
-    
-    .modal-content {
-        width: 95%;
-        padding: 25px;
-    }
-    
-    .modal-icon {
-        font-size: 3.5em;
-    }
-    
-    .button-group {
-        flex-direction: column;
-    }
-    
-    button {
-        min-width: 100%;
-    }
-}
-</style>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AbsenTrack — Gestion des Absences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0c0c0c;
+            --bg-elevated: #161616;
+            --card: #1e1e1e;
+            --card-hover: #262626;
+            --border: #2a2a2a;
+            --border-light: #333;
+            --fg: #f0ece4;
+            --fg-dim: #c4bfb4;
+            --fg-muted: #7a7568;
+            --accent: #e8a83e;
+            --accent-hover: #f0b84e;
+            --accent-dim: rgba(232,168,62,0.1);
+            --accent-border: rgba(232,168,62,0.25);
+            --danger: #e84057;
+            --danger-dim: rgba(232,64,87,0.1);
+            --success: #3ec97a;
+            --success-dim: rgba(62,201,122,0.1);
+            --info: #3eb8e8;
+            --info-dim: rgba(62,184,232,0.1);
+            --purple: #b07aff;
+            --purple-dim: rgba(176,122,255,0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--fg); overflow-x: hidden; }
+        h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', sans-serif; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
+
+        .bg-glow {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background:
+                radial-gradient(ellipse 700px 500px at 5% 15%, rgba(232,168,62,0.05) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 95% 85%, rgba(232,64,87,0.03) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 300px at 50% 50%, rgba(62,184,232,0.02) 0%, transparent 70%);
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0; width: 270px;
+            background: var(--bg-elevated); border-right: 1px solid var(--border);
+            z-index: 50; display: flex; flex-direction: column; transition: transform .3s ease;
+        }
+        .sidebar-logo { padding: 22px 20px; border-bottom: 1px solid var(--border); }
+        .sidebar nav { flex: 1; padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+        .nav-group-label { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--fg-muted); padding: 14px 14px 6px; font-weight: 700; }
+        .nav-item {
+            display: flex; align-items: center; gap: 11px; padding: 11px 14px;
+            border-radius: 10px; cursor: pointer; transition: all .2s; color: var(--fg-muted);
+            font-size: 13.5px; font-weight: 500; border: 1px solid transparent; position: relative;
+        }
+        .nav-item:hover { color: var(--fg-dim); background: var(--card); }
+        .nav-item.active { color: var(--accent); background: var(--accent-dim); border-color: var(--accent-border); }
+        .nav-item i { width: 18px; text-align: center; font-size: 15px; }
+        .nav-item .nav-badge {
+            margin-left: auto; background: var(--danger); color: #fff; font-size: 10px;
+            font-weight: 700; padding: 2px 7px; border-radius: 10px; min-width: 20px; text-align: center;
+        }
+        .sidebar-footer {
+            padding: 14px 16px; border-top: 1px solid var(--border);
+            display: flex; align-items: center; gap: 11px;
+        }
+
+        /* ===== MAIN ===== */
+        .main { margin-left: 270px; min-height: 100vh; position: relative; z-index: 1; }
+        .top-bar {
+            position: sticky; top: 0; z-index: 40;
+            background: rgba(12,12,12,0.82); backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border); padding: 14px 28px;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        }
+
+        /* ===== COMPOSANTS ===== */
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 22px; position: relative; overflow: hidden; transition: all .25s;
+        }
+        .stat-card:hover { border-color: var(--accent-border); transform: translateY(-2px); }
+        .stat-card .s-icon {
+            width: 44px; height: 44px; border-radius: 11px;
+            display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 14px;
+        }
+        .stat-card .s-val { font-family: 'Space Grotesk'; font-size: 30px; font-weight: 700; line-height: 1; }
+        .stat-card .s-lbl { color: var(--fg-muted); font-size: 12.5px; margin-top: 5px; }
+
+        .panel { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+        .panel-head { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+        .panel-body { padding: 0; }
+        .panel-body.padded { padding: 22px; }
+
+        .data-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .data-table thead th {
+            padding: 11px 16px; text-align: left; font-size: 10.5px; text-transform: uppercase;
+            letter-spacing: .08em; color: var(--fg-muted); font-weight: 700;
+            border-bottom: 1px solid var(--border); background: var(--bg-elevated); position: sticky; top: 0;
+        }
+        .data-table tbody tr { transition: background .12s; }
+        .data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+        .data-table tbody td { padding: 13px 16px; font-size: 13.5px; border-bottom: 1px solid rgba(42,42,42,0.6); }
+
+        .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: 9px;
+            font-size: 13px; font-weight: 600; cursor: pointer; border: none;
+            transition: all .2s; font-family: 'DM Sans'; white-space: nowrap;
+        }
+        .btn-primary { background: var(--accent); color: #000; }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(232,168,62,0.25); }
+        .btn-ghost { background: transparent; color: var(--fg-muted); border: 1px solid var(--border); }
+        .btn-ghost:hover { color: var(--fg); border-color: var(--fg-muted); }
+        .btn-danger-ghost { background: transparent; color: var(--danger); border: 1px solid rgba(232,64,87,0.3); }
+        .btn-danger-ghost:hover { background: var(--danger-dim); }
+        .btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 7px; }
+        .btn-icon {
+            width: 34px; height: 34px; padding: 0; border-radius: 8px;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--card); border: 1px solid var(--border);
+            color: var(--fg-muted); cursor: pointer; transition: all .2s; flex-shrink: 0;
+        }
+        .btn-icon:hover { color: var(--fg); border-color: var(--fg-muted); }
+
+        .form-input {
+            width: 100%; padding: 9px 13px; border-radius: 9px; background: var(--bg);
+            border: 1px solid var(--border); color: var(--fg); font-size: 13.5px;
+            font-family: 'DM Sans'; transition: border-color .2s; outline: none;
+        }
+        .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+        .form-input::placeholder { color: var(--fg-muted); }
+        select.form-input {
+            cursor: pointer; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7568' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 11px center; padding-right: 32px;
+        }
+        .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--fg-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: .06em; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+        .avatar {
+            width: 36px; height: 36px; border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 12px; font-family: 'Space Grotesk'; flex-shrink: 0;
+        }
+        .avatar-sm { width: 30px; height: 30px; font-size: 10px; border-radius: 7px; }
+        .avatar-lg { width: 52px; height: 52px; font-size: 17px; border-radius: 13px; }
+
+        .search-wrap { position: relative; }
+        .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--fg-muted); font-size: 13px; }
+        .search-wrap input { padding-left: 36px; }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px);
+            z-index: 100; display: none; align-items: center; justify-content: center;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 18px;
+            padding: 28px; width: 92%; max-width: 560px; max-height: 88vh; overflow-y: auto;
+            animation: slideUp .25s ease;
+        }
+        .modal-lg { max-width: 720px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ===== TOAST ===== */
+        .toast-box { position: fixed; top: 18px; right: 18px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
+        .toast {
+            padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 500;
+            display: flex; align-items: center; gap: 9px; border: 1px solid;
+            animation: tIn .25s ease, tOut .25s ease 2.7s forwards;
+        }
+        .toast-success { background: var(--success-dim); color: var(--success); border-color: rgba(62,201,122,0.2); }
+        .toast-error { background: var(--danger-dim); color: var(--danger); border-color: rgba(232,64,87,0.2); }
+        .toast-info { background: var(--info-dim); color: var(--info); border-color: rgba(62,184,232,0.2); }
+        @keyframes tIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes tOut { to { opacity: 0; transform: translateX(30px); } }
+
+        /* ===== PAGES ===== */
+        .page { display: none; padding: 28px; animation: fadeIn .25s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .custom-check {
+            width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all .15s; flex-shrink: 0;
+        }
+        .custom-check.checked { background: var(--danger); border-color: var(--danger); }
+        .custom-check.checked i { display: block; }
+        .custom-check i { display: none; color: #fff; font-size: 11px; }
+
+        .progress-bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.05); overflow: hidden; }
+        .progress-bar .fill { height: 100%; border-radius: 3px; transition: width .5s ease; }
+
+        .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(62,201,122,0.4); } 50% { box-shadow: 0 0 0 7px rgba(62,201,122,0); } }
+
+        .tag {
+            display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+            border-radius: 6px; font-size: 11px; font-weight: 600;
+        }
+
+        .empty-state { text-align: center; padding: 50px 20px; color: var(--fg-muted); }
+        .empty-state i { font-size: 32px; margin-bottom: 10px; display: block; opacity: .5; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .flex-between { display: flex; align-items: center; justify-content: space-between; }
+        .flex-center { display: flex; align-items: center; gap: 10px; }
+        .mb-16 { margin-bottom: 16px; }
+        .mb-24 { margin-bottom: 24px; }
+        .mb-32 { margin-bottom: 32px; }
+
+        .module-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 18px; transition: all .2s; cursor: default; position: relative; overflow: hidden;
+        }
+        .module-card:hover { border-color: var(--accent-border); }
+        .module-card .mod-color { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+
+        .time-slot {
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+            border-radius: 10px; border: 1px solid var(--border); transition: all .15s;
+        }
+        .time-slot:hover { background: var(--card-hover); }
+
+        .mobile-toggle { display: none; }
+        @media (max-width: 1024px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .mobile-toggle { display: flex; }
+            .top-bar { padding: 10px 14px; }
+            .page { padding: 14px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
+<div class="bg-glow"></div>
+<div class="toast-box" id="toastBox"></div>
 
-<header>
-    <h1>ISPITS Marrakech</h1>
-    <h3>Inscription et Réinscription aux Semestres</h3>
-    <p>Année Académique 2025-2026</p>
-</header>
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="flex-center">
+            <div style="width:38px;height:38px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-user-clock" style="color:#000;font-size:17px;"></i>
+            </div>
+            <div style="margin-left:11px;">
+                <h2 style="font-size:17px;font-weight:700;line-height:1;">AbsenTrack</h2>
+                <span style="font-size:10.5px;color:var(--fg-muted);">Gestion des absences</span>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <div class="nav-group-label">Principal</div>
+        <div class="nav-item active" data-page="dashboard" onclick="go('dashboard')"><i class="fas fa-chart-pie"></i>Tableau de bord</div>
 
-<div class="container">
+        <div class="nav-group-label">Gestion</div>
+        <div class="nav-item" data-page="students" onclick="go('students')"><i class="fas fa-users"></i>Etudiants<span class="nav-badge" id="navStudentCount">15</span></div>
+        <div class="nav-item" data-page="modules" onclick="go('modules')"><i class="fas fa-book"></i>Modules<span class="nav-badge" id="navModCount" style="background:var(--info);">0</span></div>
+        <div class="nav-item" data-page="schedule" onclick="go('schedule')"><i class="fas fa-clock"></i>Plages horaires</div>
 
-<div class="info-box">
-    <strong>ℹ️ Information :</strong> Tous les champs marqués d'un astérisque (*) sont obligatoires.
+        <div class="nav-group-label">Absences</div>
+        <div class="nav-item" data-page="record" onclick="go('record')"><i class="fas fa-calendar-xmark"></i>Enregistrer</div>
+        <div class="nav-item" data-page="history" onclick="go('history')"><i class="fas fa-clock-rotate-left"></i>Historique</div>
+        <div class="nav-item" data-page="stats" onclick="go('stats')"><i class="fas fa-chart-bar"></i>Statistiques</div>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="avatar" style="background:var(--accent-dim);color:var(--accent);">AD</div>
+        <div>
+            <div style="font-size:13px;font-weight:600;">Administrateur</div>
+            <div style="font-size:10.5px;color:var(--fg-muted);display:flex;align-items:center;gap:5px;"><span class="pulse-dot"></span>En ligne</div>
+        </div>
+    </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+    <header class="top-bar">
+        <div class="flex-center">
+            <button class="btn-icon mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')"><i class="fas fa-bars"></i></button>
+            <div>
+                <h1 style="font-size:18px;font-weight:700;" id="pageTitle">Tableau de bord</h1>
+                <p style="font-size:11.5px;color:var(--fg-muted);" id="pageSub">Vue d'ensemble</p>
+            </div>
+        </div>
+        <div class="flex-center">
+            <button class="btn-icon" onclick="exportCSV()" title="Exporter CSV"><i class="fas fa-download" style="font-size:13px;"></i></button>
+            <div style="font-size:12px;color:var(--fg-muted);white-space:nowrap;" id="todayDate"></div>
+        </div>
+    </header>
+
+    <!-- ========== DASHBOARD ========== -->
+    <div class="page active" id="page-dashboard">
+        <div class="grid-4 mb-24" id="dashStats"></div>
+        <div class="grid-2 mb-24">
+            <div class="panel"><div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Absences par mois</h3></div><div class="panel-body padded"><canvas id="chartMonth" height="190"></canvas></div></div>
+            <div class="panel"><div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Par module</h3></div><div class="panel-body padded"><canvas id="chartMod" height="190"></canvas></div></div>
+        </div>
+        <div class="panel">
+            <div class="panel-head">
+                <h3 style="font-size:14px;font-weight:600;">Dernières absences</h3>
+                <button class="btn btn-ghost btn-sm" onclick="go('history')">Voir tout <i class="fas fa-arrow-right" style="font-size:9px;"></i></button>
+            </div>
+            <div class="panel-body" style="overflow-x:auto;">
+                <table class="data-table"><thead><tr><th>Etudiant</th><th>Module</th><th>Plage horaire</th><th>Date</th><th>Motif</th><th>Statut</th></tr></thead><tbody id="dashRecentBody"></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== ETUDIANTS ========== -->
+    <div class="page" id="page-students">
+        <div class="flex-between mb-16" style="flex-wrap:wrap;gap:10px;">
+            <div class="search-wrap" style="flex:1;max-width:340px;">
+                <i class="fas fa-search"></i>
+                <input class="form-input" placeholder="Rechercher un étudiant..." id="stuSearch" oninput="renderStudents()">
+            </div>
+            <div class="flex-center" style="gap:8px;flex-wrap:wrap;">
+                <select class="form-input" style="width:auto;" id="stuFilterClass" onchange="renderStudents()">
+                    <option value="">Toutes les classes</option>
+                    <option value="L1 Info">L1 Info</option><option value="L2 Info">L2 Info</option>
+                    <option value="L3 Info">L3 Info</option><option value="M1 Info">M1 Info</option><option value="M2 Info">M2 Info</option>
+                </select>
+                <button class="btn btn-primary" onclick="openStuModal()"><i class="fas fa-plus"></i>Ajouter</button>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-body" style="overflow-x:auto;">
+                <table class="data-table">
+                    <thead><tr><th>Etudiant</th><th>Matricule</th><th>Classe</th><th>Email</th><th>Téléphone</th><th>Absences</th><th>Actions</th></tr></thead>
+                    <tbody id="stuBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODULES ========== -->
+    <div class="page" id="page-modules">
+        <div class="flex-between mb-16" style="flex-wrap:wrap;gap:10px;">
+            <div class="search-wrap" style="flex:1;max-width:340px;">
+                <i class="fas fa-search"></i>
+                <input class="form-input" placeholder="Rechercher un module..." id="modSearch" oninput="renderModules()">
+            </div>
+            <div class="flex-center" style="gap:8px;">
+                <select class="form-input" style="width:auto;" id="modFilterClass" onchange="renderModules()">
+                    <option value="">Toutes les classes</option>
+                    <option value="L1 Info">L1 Info</option><option value="L2 Info">L2 Info</option>
+                    <option value="L3 Info">L3 Info</option><option value="M1 Info">M1 Info</option><option value="M2 Info">M2 Info</option>
+                </select>
+                <button class="btn btn-primary" onclick="openModModal()"><i class="fas fa-plus"></i>Ajouter</button>
+            </div>
+        </div>
+        <div id="modGrid" class="grid-3 mb-24"></div>
+        <div class="panel">
+            <div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Liste complète des modules</h3></div>
+            <div class="panel-body" style="overflow-x:auto;">
+                <table class="data-table">
+                    <thead><tr><th>Code</th><th>Module</th><th>Classe</th><th>Enseignant</th><th>Coef.</th><th>Absences</th><th>Actions</th></tr></thead>
+                    <tbody id="modBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PLAGES HORAIRES ========== -->
+    <div class="page" id="page-schedule">
+        <div class="flex-between mb-16" style="flex-wrap:wrap;gap:10px;">
+            <div>
+                <h3 style="font-size:15px;font-weight:600;">Plages horaires de cours</h3>
+                <p style="font-size:12px;color:var(--fg-muted);">Gérez les créneaux utilisés pour l'enregistrement des absences</p>
+            </div>
+            <button class="btn btn-primary" onclick="openSlotModal()"><i class="fas fa-plus"></i>Ajouter un créneau</button>
+        </div>
+        <div class="grid-2 mb-24">
+            <div class="panel">
+                <div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Créneaux du matin</h3><span class="badge" style="background:var(--accent-dim);color:var(--accent);" id="morningCount">0</span></div>
+                <div class="panel-body padded" id="morningSlots" style="display:flex;flex-direction:column;gap:8px;"></div>
+            </div>
+            <div class="panel">
+                <div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Créneaux de l'après-midi</h3><span class="badge" style="background:var(--info-dim);color:var(--info);" id="afternoonCount">0</span></div>
+                <div class="panel-body padded" id="afternoonSlots" style="display:flex;flex-direction:column;gap:8px;"></div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Emploi du temps type</h3></div>
+            <div class="panel-body padded" style="overflow-x:auto;">
+                <table class="data-table" id="scheduleTable">
+                    <thead><tr><th>Heure</th><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th></tr></thead>
+                    <tbody id="scheduleBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== ENREGISTRER ========== -->
+    <div class="page" id="page-record">
+        <div class="grid-2">
+            <div class="panel">
+                <div class="panel-head"><h3 style="font-size:14px;font-weight:600;"><i class="fas fa-pen-to-square" style="color:var(--accent);margin-right:8px;"></i>Paramètres</h3></div>
+                <div class="panel-body padded" style="display:flex;flex-direction:column;gap:16px;">
+                    <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="recDate"></div>
+                    <div class="form-group"><label class="form-label">Module</label><select class="form-input" id="recModule"><option value="">Sélectionner un module</option></select></div>
+                    <div class="form-group"><label class="form-label">Plage horaire</label><select class="form-input" id="recSlot"><option value="">Sélectionner un créneau</option></select></div>
+                    <div class="form-group"><label class="form-label">Classe</label><select class="form-input" id="recClass" onchange="loadRecStudents()"><option value="">Toutes les classes</option><option value="L1 Info">L1 Info</option><option value="L2 Info">L2 Info</option><option value="L3 Info">L3 Info</option><option value="M1 Info">M1 Info</option><option value="M2 Info">M2 Info</option></select></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-head">
+                    <h3 style="font-size:14px;font-weight:600;"><i class="fas fa-user-check" style="color:var(--accent);margin-right:8px;"></i>Appel</h3>
+                    <div class="flex-center" style="gap:8px;">
+                        <span style="font-size:12px;color:var(--fg-muted);" id="recCountLbl">0 absent(s)</span>
+                        <button class="btn btn-ghost btn-sm" onclick="recAllAbsent()">Tous absents</button>
+                        <button class="btn btn-ghost btn-sm" onclick="recAllPresent()">Tous présents</button>
+                    </div>
+                </div>
+                <div class="panel-body padded" style="max-height:460px;overflow-y:auto;">
+                    <div id="recStudentList" style="display:flex;flex-direction:column;gap:5px;"></div>
+                </div>
+                <div style="padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px;">
+                    <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="saveRecord()"><i class="fas fa-save"></i>Enregistrer</button>
+                    <button class="btn btn-ghost" onclick="resetRecord()">Réinitialiser</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HISTORIQUE ========== -->
+    <div class="page" id="page-history">
+        <div class="flex-between mb-16" style="flex-wrap:wrap;gap:10px;">
+            <div class="flex-center" style="gap:8px;flex-wrap:wrap;">
+                <div class="search-wrap"><i class="fas fa-search"></i><input class="form-input" placeholder="Rechercher..." id="histSearch" oninput="renderHistory()" style="width:180px;"></div>
+                <input type="date" class="form-input" style="width:auto;" id="histFrom" onchange="renderHistory()">
+                <span style="color:var(--fg-muted);font-size:13px;">à</span>
+                <input type="date" class="form-input" style="width:auto;" id="histTo" onchange="renderHistory()">
+                <select class="form-input" style="width:auto;" id="histMod" onchange="renderHistory()"><option value="">Tous modules</option></select>
+                <select class="form-input" style="width:auto;" id="histSlot" onchange="renderHistory()"><option value="">Tous créneaux</option></select>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="clearHistFilters()"><i class="fas fa-filter-circle-xmark"></i>Réinitialiser</button>
+        </div>
+        <div class="panel">
+            <div class="panel-body" style="overflow-x:auto;">
+                <table class="data-table">
+                    <thead><tr><th>Etudiant</th><th>Classe</th><th>Module</th><th>Plage horaire</th><th>Date</th><th>Motif</th><th>Statut</th><th>Actions</th></tr></thead>
+                    <tbody id="histBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="flex-between" style="margin-top:14px;">
+            <span style="font-size:12px;color:var(--fg-muted);" id="histCount"></span>
+            <div class="flex-center" style="gap:6px;" id="histPag"></div>
+        </div>
+    </div>
+
+    <!-- ========== STATISTIQUES ========== -->
+    <div class="page" id="page-stats">
+        <div class="grid-2 mb-24">
+            <div class="panel"><div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Taux par classe</h3></div><div class="panel-body padded"><canvas id="chartClass" height="210"></canvas></div></div>
+            <div class="panel"><div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Par jour de la semaine</h3></div><div class="panel-body padded"><canvas id="chartDay" height="210"></canvas></div></div>
+        </div>
+        <div class="panel mb-24"><div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Top 10 étudiants les plus absents</h3></div><div class="panel-body padded"><canvas id="chartTop" height="140"></canvas></div></div>
+        <div class="panel"><div class="panel-head"><h3 style="font-size:14px;font-weight:600;">Détail par étudiant</h3></div><div class="panel-body padded" id="statDetail"></div></div>
+    </div>
 </div>
 
-<h2>Formulaire d'Inscription</h2>
-
-<form id="inscriptionForm" novalidate="">
-
-<!-- Section Informations Personnelles -->
-<div class="section">
-    <div class="section-subtitle">📋 Informations Personnelles</div>
-    
-    <div class="form-row">
-        <div class="form-group">
-            <label for="nom" class="required">Nom</label>
-            <input type="text" id="nom" name="nom" required="" placeholder="Entrez votre nom">
-            <span class="error-message">Le nom est obligatoire</span>
+<!-- ===== MODAL: ETUDIANT ===== -->
+<div class="modal-overlay" id="stuModal">
+    <div class="modal">
+        <div class="flex-between mb-24">
+            <h3 style="font-size:17px;font-weight:700;" id="stuModalTitle">Ajouter un étudiant</h3>
+            <button class="btn-icon" onclick="closeModal('stuModal')"><i class="fas fa-xmark"></i></button>
         </div>
-
-        <div class="form-group">
-            <label for="prenom" class="required">Prénom</label>
-            <input type="text" id="prenom" name="prenom" required="" placeholder="Entrez votre prénom">
-            <span class="error-message">Le prénom est obligatoire</span>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="cni" class="required">CNI</label>
-            <input type="text" id="cni" name="cni" required="" placeholder="Exemple: AB123456" pattern="[A-Za-z0-9]{6,}">
-            <span class="error-message">Le CNI est obligatoire et doit contenir au moins 6 caractères</span>
-        </div>
-
-        <div class="form-group">
-            <label for="dateNaissance" class="required">Date de naissance</label>
-            <input type="date" id="dateNaissance" name="dateNaissance" required="">
-            <span class="error-message">La date de naissance est obligatoire</span>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="nationalite" class="required">Nationalité</label>
-            <input type="text" id="nationalite" name="nationalite" required="" placeholder="Exemple: Marocain(e)">
-            <span class="error-message">La nationalité est obligatoire</span>
-        </div>
-
-        <div class="form-group">
-            <label for="email" class="required">Email</label>
-            <input
-    type="email"
-    id="email"
-    name="email"
-    required
-    autocomplete="email"
-    placeholder="exemple@email.com">
-            <span class="error-message">Veuillez entrer une adresse email valide</span>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="telephone">Téléphone</label>
-            <input type="tel" id="telephone" name="telephone" placeholder="Exemple: +212612345678" pattern=".{8,}">
-            <span class="error-message">Veuillez entrer un numéro de téléphone valide</span>
-        </div>
-
-        <div class="form-group">
-            <label for="adresse">Adresse</label>
-            <input type="text" id="adresse" name="adresse" placeholder="Votre adresse complète">
+        <div style="display:flex;flex-direction:column;gap:15px;">
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Prénom *</label><input class="form-input" id="sF" placeholder="Prénom"></div>
+                <div class="form-group"><label class="form-label">Nom *</label><input class="form-input" id="sL" placeholder="Nom"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Matricule *</label><input class="form-input" id="sM" placeholder="2025INF001"></div>
+                <div class="form-group"><label class="form-label">Classe *</label><select class="form-input" id="sC"><option value="">Sélectionner</option><option value="L1 Info">L1 Info</option><option value="L2 Info">L2 Info</option><option value="L3 Info">L3 Info</option><option value="M1 Info">M1 Info</option><option value="M2 Info">M2 Info</option></select></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="sE" placeholder="email@univ.ci"></div>
+                <div class="form-group"><label class="form-label">Téléphone</label><input class="form-input" id="sT" placeholder="+225 XX XX XX XX"></div>
+            </div>
+            <input type="hidden" id="sId" value="">
+            <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px;" onclick="saveStu()"><i class="fas fa-save"></i><span id="sSaveLbl">Enregistrer</span></button>
         </div>
     </div>
 </div>
 
-<!-- Section Informations Académiques -->
-<div class="section">
-    <div class="section-subtitle">🎓 Informations Académiques</div>
-    
-    <div class="form-row">
-        <div class="form-group">
-            <label for="filiere" class="required">Filière</label>
-            <select id="filiere" name="filiere" required="">
-                <option value="">-- Sélectionner une filière --</option>
-                <option value="SI">Soins Infirmiers</option>
-                <option value="SF">Sage-Femme</option>
-                <option value="TS">Techniques de Santé</option>
-                <option value="RR">Rééducation et Réhabilitation</option>
-                <option value="AMS">Assistance Médico-Sociale</option>
-            </select>
-            <span class="error-message">Veuillez sélectionner une filière</span>
+<!-- ===== MODAL: MODULE ===== -->
+<div class="modal-overlay" id="modModal">
+    <div class="modal">
+        <div class="flex-between mb-24">
+            <h3 style="font-size:17px;font-weight:700;" id="modModalTitle">Ajouter un module</h3>
+            <button class="btn-icon" onclick="closeModal('modModal')"><i class="fas fa-xmark"></i></button>
         </div>
-
-        <div class="form-group">
-            <label for="option" class="required">Option</label>
-            <select id="option" name="option" required="">
-                <option value="">-- Sélectionner une option --</option>
-                <option value="IP">IP</option>
-                <option value="ISM">ISM</option>
-                <option value="IAR">IAR</option>
-                <option value="ISUSI">ISUSI</option>
-                <option value="IBO">IBO</option>
-                <option value="IG">IG</option>
-                <option value="ISFSC">ISFSC</option>
-                <option value="INP">INP</option>
-                <option value="SF">SF</option>
-                <option value="LABO">LABO</option>
-                <option value="SE">SE</option>
-                <option value="RADIO">RADIO</option>
-                <option value="SS">SS</option>
-                <option value="ORTHO">ORTHO</option>
-                <option value="KINE">KINE</option>
-                <option value="PSY">PSY</option>
-                <option value="AS">AS</option>
-            </select>
-            <span class="error-message">Veuillez sélectionner une option</span>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="promotion" class="required">Promotion (Année d'entrée)</label>
-            <input type="text" id="promotion" name="promotion" required="" placeholder="Exemple: 2024" pattern="[0-9]{4}">
-            <span class="error-message">La promotion doit être une année valide (4 chiffres)</span>
-        </div>
-
-        <div class="form-group">
-            <label for="semestre" class="required">Semestre</label>
-            <select id="semestre" name="semestre" required="">
-                <option value="">-- Sélectionner un semestre --</option>
-                <option value="S2">S2</option>
-                <option value="S3">S3</option>
-                <option value="S4">S4</option>
-                <option value="S5">S5</option>
-                <option value="S6">S6</option>
-            </select>
-            <span class="error-message">Veuillez sélectionner un semestre</span>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="anneeUniversitaire" class="required">Année Universitaire</label>
-            <input type="text" id="anneeUniversitaire" name="anneeUniversitaire" value="2025-2026" readonly="">
-        </div>
-
-        <div class="form-group">
-            <label for="type" class="required">Type d'inscription</label>
-            <select id="type" name="type" required="">
-                <option value="">-- Sélectionner un type --</option>
-                <option value="inscription">Inscription (Première inscription)</option>
-                <option value="reinscription">Réinscription</option>
-            </select>
-            <span class="error-message">Veuillez sélectionner un type d'inscription</span>
-        </div>
-    </div>
-
-    <div class="form-row full">
-        <div class="form-group">
-            <label for="modules">Modules suivis (séparés par des virgules)</label>
-            <textarea id="modules" name="modules" rows="3" placeholder="Exemple: Anatomie, Physiologie, Pharmacologie"></textarea>
+        <div style="display:flex;flex-direction:column;gap:15px;">
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Code *</label><input class="form-input" id="mCode" placeholder="INF201"></div>
+                <div class="form-group"><label class="form-label">Nom *</label><input class="form-input" id="mName" placeholder="Algorithmique"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Classe *</label><select class="form-input" id="mClass"><option value="">Sélectionner</option><option value="L1 Info">L1 Info</option><option value="L2 Info">L2 Info</option><option value="L3 Info">L3 Info</option><option value="M1 Info">M1 Info</option><option value="M2 Info">M2 Info</option></select></div>
+                <div class="form-group"><label class="form-label">Coefficient</label><input type="number" class="form-input" id="mCoef" value="2" min="1" max="6"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Enseignant</label><input class="form-input" id="mTeacher" placeholder="Dr. Koné"></div>
+            <input type="hidden" id="mId" value="">
+            <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px;" onclick="saveMod()"><i class="fas fa-save"></i><span id="mSaveLbl">Enregistrer</span></button>
         </div>
     </div>
 </div>
 
-<!-- Boutons d'action -->
-<div class="button-group">
-    <button type="submit" class="btn-submit">✓ Valider l'inscription</button>
-    <button type="reset" class="btn-reset">↻ Réinitialiser le formulaire</button>
-</div>
-
-</form>
-
-</div>
-
-<!-- Conteneur pour les messages -->
-<div class="message-container" id="messageContainer"></div>
-
-<!-- Modal de confirmation -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-        <div class="modal-icon success" id="modalIcon">✓</div>
-        <div class="modal-title" id="modalTitle">Inscription Confirmée</div>
-        <div class="modal-message" id="modalMessage">Votre inscription a été enregistrée avec succès!</div>
-        <div class="modal-subtext" id="modalSubtext">Un email de confirmation vous sera envoyé à votre adresse</div>
-        
-        <div class="modal-reference">
-            <div class="modal-reference-label">Numéro de Référence</div>
-            <div class="modal-reference-number" id="referenceNumber">#INS-000000</div>
+<!-- ===== MODAL: CRENEAU ===== -->
+<div class="modal-overlay" id="slotModal">
+    <div class="modal" style="max-width:420px;">
+        <div class="flex-between mb-24">
+            <h3 style="font-size:17px;font-weight:700;">Ajouter un créneau</h3>
+            <button class="btn-icon" onclick="closeModal('slotModal')"><i class="fas fa-xmark"></i></button>
         </div>
-        
-        <div class="modal-details" id="modalDetails">
-            <!-- Les détails seront injectés ici par JavaScript -->
-        </div>
-        
-        <div class="modal-buttons">
-            <button class="btn-primary" onclick="closeModal()">✓ Accepter</button>
-            <button class="btn-print" onclick="printInscription()">🖨 Imprimer</button>
-            <button class="btn-secondary" onclick="downloadInscription()">⬇ Télécharger</button>
+        <div style="display:flex;flex-direction:column;gap:15px;">
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Heure début *</label><input type="time" class="form-input" id="slStart" value="08:00"></div>
+                <div class="form-group"><label class="form-label">Heure fin *</label><input type="time" class="form-input" id="slEnd" value="10:00"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Libellé</label><input class="form-input" id="slLabel" placeholder="Ex: Cours + TD"></div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px;" onclick="saveSlot()"><i class="fas fa-save"></i>Ajouter</button>
         </div>
     </div>
 </div>
 
-<footer>
-    <p>© 2025-2026 ISPITSM Marrakech - Plateforme d'inscription en ligne</p>
-</footer>
+<!-- ===== MODAL: MOTIF ===== -->
+<div class="modal-overlay" id="motifModal">
+    <div class="modal" style="max-width:400px;">
+        <div class="flex-between mb-24">
+            <h3 style="font-size:17px;font-weight:700;">Motif de l'absence</h3>
+            <button class="btn-icon" onclick="closeModal('motifModal')"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:15px;">
+            <div class="form-group"><label class="form-label">Motif</label><select class="form-input" id="mtSelect"><option value="Non justifié">Non justifié</option><option value="Maladie">Maladie</option><option value="Raison familiale">Raison familiale</option><option value="Problème de transport">Problème de transport</option><option value="Convocation administrative">Convocation administrative</option><option value="Autre">Autre</option></select></div>
+            <div class="form-group"><label class="form-label">Commentaire</label><textarea class="form-input" rows="2" id="mtComment" placeholder="Détails..." style="resize:vertical;"></textarea></div>
+            <input type="hidden" id="mtId" value="">
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="saveMotif()"><i class="fas fa-check"></i>Valider</button>
+        </div>
+    </div>
+</div>
 
 <script>
-// Classe pour gérer les messages
-class MessageManager {
-    constructor(containerId) {
-        this.container = document.getElementById(containerId);
-        this.messages = [];
-    }
+// ============================================================
+// DONNÉES
+// ============================================================
+const CC = {
+    'L1 Info': { bg:'rgba(232,168,62,0.12)', fg:'#e8a83e' },
+    'L2 Info': { bg:'rgba(62,184,232,0.12)', fg:'#3eb8e8' },
+    'L3 Info': { bg:'rgba(62,201,122,0.12)', fg:'#3ec97a' },
+    'M1 Info': { bg:'rgba(176,122,255,0.12)', fg:'#b07aff' },
+    'M2 Info': { bg:'rgba(232,64,87,0.12)', fg:'#e84057' },
+};
+const MOD_COLORS = ['#e8a83e','#3eb8e8','#3ec97a','#b07aff','#e84057','#ff6b6b','#ffd166','#06d6a0','#118ab2','#ef476f','#f78c6b','#83c5be'];
 
-    show(type, title, message, details = null, duration = 5000) {
-        const messageId = Date.now();
-        
-        const messageEl = document.createElement('div');
-        messageEl.className = `message ${type}`;
-        messageEl.id = `msg-${messageId}`;
-        
-        const icons = {
-            success: '✓',
-            error: '✕',
-            warning: '⚠',
-            info: 'ℹ'
-        };
-        
-        let detailsHtml = '';
-        if (details) {
-            detailsHtml = '<div class="message-details">' + details + '</div>';
-        }
-        
-        messageEl.innerHTML = `
-            <div class="icon">${icons[type]}</div>
-            <div class="message-content">
-                <div class="message-title">${title}</div>
-                <div class="message-text">${message}</div>
-                ${detailsHtml}
-            </div>
-            <button class="message-close" onclick="messageManager.remove('${messageId}')">×</button>
-        `;
-        
-        this.container.appendChild(messageEl);
-        this.messages.push(messageId);
-        
-        if (duration > 0) {
-            setTimeout(() => this.remove(messageId), duration);
-        }
-        
-        return messageId;
-    }
+let students = [
+    {id:1,fn:'Aminata',ln:'Koné',mat:'2025INF001',cls:'L2 Info',email:'aminata.kone@univ.ci',tel:'+225 07 12 34 56'},
+    {id:2,fn:'Ibrahim',ln:'Traoré',mat:'2025INF002',cls:'L2 Info',email:'ibrahima.traore@univ.ci',tel:'+225 05 98 76 54'},
+    {id:3,fn:'Fatou',ln:'Diallo',mat:'2025INF003',cls:'L1 Info',email:'fatou.diallo@univ.ci',tel:'+225 01 23 45 67'},
+    {id:4,fn:'Kouadio',ln:'Yao',mat:'2025INF004',cls:'L3 Info',email:'kouadio.yao@univ.ci',tel:'+225 07 65 43 21'},
+    {id:5,fn:'Mariam',ln:'Coulibaly',mat:'2025INF005',cls:'L1 Info',email:'mariam.coulibaly@univ.ci',tel:'+225 05 11 22 33'},
+    {id:6,fn:'Jean-Pierre',ln:'Aka',mat:'2025INF006',cls:'M1 Info',email:'jp.aka@univ.ci',tel:'+225 01 44 55 66'},
+    {id:7,fn:'Aïssata',ln:'Bamba',mat:'2025INF007',cls:'L2 Info',email:'aissata.bamba@univ.ci',tel:'+225 07 77 88 99'},
+    {id:8,fn:'Olivier',ln:"N'Guessan",mat:'2025INF008',cls:'L3 Info',email:'olivier.nguessan@univ.ci',tel:'+225 05 33 22 11'},
+    {id:9,fn:'Djénéba',ln:'Sissoko',mat:'2025INF009',cls:'M1 Info',email:'djeneba.sissoko@univ.ci',tel:'+225 01 66 77 88'},
+    {id:10,fn:'Seydou',ln:'Ouattara',mat:'2025INF010',cls:'L1 Info',email:'seydou.ouattara@univ.ci',tel:'+225 07 99 00 11'},
+    {id:11,fn:'Christelle',ln:'Koffi',mat:'2025INF011',cls:'M2 Info',email:'christelle.koffi@univ.ci',tel:'+225 05 22 33 44'},
+    {id:12,fn:'Abdoulaye',ln:'Diop',mat:'2025INF012',cls:'L2 Info',email:'abdoulaye.diop@univ.ci',tel:'+225 01 55 66 77'},
+    {id:13,fn:'Ramatoulaye',ln:'Keita',mat:'2025INF013',cls:'L3 Info',email:'ramatoulaye.keita@univ.ci',tel:'+225 07 44 33 22'},
+    {id:14,fn:'Boris',ln:'Konan',mat:'2025INF014',cls:'M2 Info',email:'boris.konan@univ.ci',tel:'+225 05 88 99 00'},
+    {id:15,fn:'Fanta',ln:'Touré',mat:'2025INF015',cls:'L1 Info',email:'fanta.toure@univ.ci',tel:'+225 01 11 00 99'},
+];
 
-    remove(messageId) {
-        const messageEl = document.getElementById(`msg-${messageId}`);
-        if (messageEl) {
-            messageEl.classList.add('removing');
-            setTimeout(() => {
-                messageEl.remove();
-                this.messages = this.messages.filter(id => id !== messageId);
-            }, 400);
-        }
-    }
+// Modules avec code, nom, classe, enseignant, coefficient
+let modules = [
+    {id:1,code:'INF101',name:'Introduction à l\'informatique',cls:'L1 Info',teacher:'M. Koné B.',coef:2},
+    {id:2,code:'INF102',name:'Algorithmique et structures de données',cls:'L1 Info',teacher:'Dr. Touré',coef:3},
+    {id:3,code:'INF103',name:'Mathématiques discrètes',cls:'L1 Info',teacher:'Mme Diallo',coef:2},
+    {id:4,code:'INF104',name:'Programmation C',cls:'L1 Info',teacher:'M. Ouattara',coef:3},
+    {id:5,code:'INF201',name:'Algorithmique avancée',cls:'L2 Info',teacher:'Dr. Koné A.',coef:3},
+    {id:6,code:'INF202',name:'Base de données',cls:'L2 Info',teacher:'Mme Bamba',coef:3},
+    {id:7,code:'INF203',name:'Programmation orientée objet',cls:'L2 Info',teacher:'M. Traoré',coef:3},
+    {id:8,code:'INF204',name:'Réseaux informatiques',cls:'L2 Info',teacher:'Dr. Yao',coef:2},
+    {id:9,code:'INF301',name:'Systèmes d\'exploitation',cls:'L3 Info',teacher:'M. N\'Guessan',coef:3},
+    {id:10,code:'INF302',name:'Ingénierie logicielle',cls:'L3 Info',teacher:'Dr. Keita',coef:3},
+    {id:11,code:'INF303',name:'Web dynamique',cls:'L3 Info',teacher:'Mme Sissoko',coef:2},
+    {id:12,code:'INF304',name:'Compilation',cls:'L3 Info',teacher:'M. Aka',coef:2},
+    {id:13,code:'INF401',name:'Intelligence artificielle',cls:'M1 Info',teacher:'Dr. Koffi',coef:4},
+    {id:14,code:'INF402',name:'Sécurité informatique',cls:'M1 Info',teacher:'M. Konan',coef:3},
+    {id:15,code:'INF403',name:'Cloud computing',cls:'M1 Info',teacher:'Dr. Diop',coef:3},
+    {id:16,code:'INF501',name:'Projets de fin d\'études',cls:'M2 Info',teacher:'Dr. Coulibaly',coef:6},
+    {id:17,code:'INF502',name:'Big Data et analytics',cls:'M2 Info',teacher:'M. Bamba',coef:4},
+    {id:18,code:'INF503',name:'IoT et systèmes embarqués',cls:'M2 Info',teacher:'Dr. Touré',coef:3},
+];
 
-    success(title, message, details = null) {
-        return this.show('success', title, message, details);
-    }
+// Plages horaires précises
+let timeSlots = [
+    {id:1,start:'08:00',end:'09:30',label:'Cours',period:'morning'},
+    {id:2,start:'09:45',end:'11:15',label:'TD / TP',period:'morning'},
+    {id:3,start:'11:30',end:'13:00',label:'Cours',period:'morning'},
+    {id:4,start:'14:00',end:'15:30',label:'Cours',period:'afternoon'},
+    {id:5,start:'15:45',end:'17:15',label:'TD / TP',period:'afternoon'},
+    {id:6,start:'17:30',end:'19:00',label:'Cours (soir)',period:'afternoon'},
+];
 
-    error(title, message, details = null) {
-        return this.show('error', title, message, details, 0);
-    }
+// Emploi du temps type (slotId → {day, moduleId})
+let schedule = [
+    {slotId:1,day:'Lundi',moduleId:5},{slotId:2,day:'Lundi',moduleId:5},
+    {slotId:1,day:'Mardi',moduleId:6},{slotId:2,day:'Mardi',moduleId:6},
+    {slotId:4,day:'Mardi',moduleId:7},
+    {slotId:1,day:'Mercredi',moduleId:8},{slotId:2,day:'Mercredi',moduleId:8},
+    {slotId:1,day:'Jeudi',moduleId:5},{slotId:4,day:'Jeudi',moduleId:7},
+    {slotId:1,day:'Vendredi',moduleId:6},{slotId:2,day:'Vendredi',moduleId:8},{slotId:4,day:'Vendredi',moduleId:7},
+];
 
-    warning(title, message, details = null) {
-        return this.show('warning', title, message, details);
-    }
+// Absences
+let absences = [
+    {id:1,sid:1,mid:5,slotId:1,date:'2025-01-06',motive:'Maladie',status:'justifié'},
+    {id:2,sid:2,mid:6,slotId:4,date:'2025-01-08',motive:'Non justifié',status:'non justifié'},
+    {id:3,sid:1,mid:8,slotId:2,date:'2025-01-10',motive:'Non justifié',status:'non justifié'},
+    {id:4,sid:5,mid:3,slotId:1,date:'2025-01-13',motive:'Raison familiale',status:'justifié'},
+    {id:5,sid:3,mid:4,slotId:5,date:'2025-01-15',motive:'Non justifié',status:'non justifié'},
+    {id:6,sid:7,mid:5,slotId:1,date:'2025-01-17',motive:'Maladie',status:'justifié'},
+    {id:7,sid:10,mid:2,slotId:2,date:'2025-01-20',motive:'Non justifié',status:'non justifié'},
+    {id:8,sid:2,mid:8,slotId:4,date:'2025-01-22',motive:'Problème de transport',status:'justifié'},
+    {id:9,sid:4,mid:9,slotId:1,date:'2025-01-24',motive:'Non justifié',status:'non justifié'},
+    {id:10,sid:6,mid:13,slotId:4,date:'2025-01-27',motive:'Convocation administrative',status:'justifié'},
+    {id:11,sid:1,mid:6,slotId:1,date:'2025-02-03',motive:'Non justifié',status:'non justifié'},
+    {id:12,sid:8,mid:11,slotId:1,date:'2025-02-05',motive:'Maladie',status:'justifié'},
+    {id:13,sid:12,mid:5,slotId:5,date:'2025-02-07',motive:'Non justifié',status:'non justifié'},
+    {id:14,sid:9,mid:14,slotId:1,date:'2025-02-10',motive:'Non justifié',status:'non justifié'},
+    {id:15,sid:3,mid:3,slotId:1,date:'2025-02-12',motive:'Raison familiale',status:'justifié'},
+    {id:16,sid:5,mid:4,slotId:5,date:'2025-02-14',motive:'Non justifié',status:'non justifié'},
+    {id:17,sid:10,mid:1,slotId:1,date:'2025-02-17',motive:'Non justifié',status:'non justifié'},
+    {id:18,sid:2,mid:5,slotId:1,date:'2025-02-19',motive:'Non justifié',status:'non justifié'},
+    {id:19,sid:13,mid:10,slotId:5,date:'2025-02-21',motive:'Maladie',status:'justifié'},
+    {id:20,sid:7,mid:11,slotId:1,date:'2025-02-24',motive:'Non justifié',status:'non justifié'},
+    {id:21,sid:1,mid:7,slotId:4,date:'2025-03-03',motive:'Non justifié',status:'non justifié'},
+    {id:22,sid:14,mid:17,slotId:4,date:'2025-03-05',motive:'Non justifié',status:'non justifié'},
+    {id:23,sid:11,mid:16,slotId:1,date:'2025-03-07',motive:'Convocation administrative',status:'justifié'},
+    {id:24,sid:15,mid:3,slotId:1,date:'2025-03-10',motive:'Non justifié',status:'non justifié'},
+    {id:25,sid:4,mid:8,slotId:5,date:'2025-03-12',motive:'Non justifié',status:'non justifié'},
+    {id:26,sid:9,mid:15,slotId:1,date:'2025-03-14',motive:'Non justifié',status:'non justifié'},
+    {id:27,sid:6,mid:5,slotId:1,date:'2025-03-17',motive:'Maladie',status:'justifié'},
+    {id:28,sid:12,mid:6,slotId:5,date:'2025-03-19',motive:'Non justifié',status:'non justifié'},
+    {id:29,sid:8,mid:12,slotId:4,date:'2025-03-21',motive:'Non justifié',status:'non justifié'},
+    {id:30,sid:2,mid:7,slotId:1,date:'2025-03-24',motive:'Non justifié',status:'non justifié'},
+];
 
-    info(title, message, details = null) {
-        return this.show('info', title, message, details);
-    }
-}
+let nStu=16, nMod=19, nSlot=7, nAbs=31, histPage=1;
+const HPP=12;
+let charts={};
 
-// Initialiser le gestionnaire de messages
-const messageManager = new MessageManager('messageContainer');
-
-// Récupérer le formulaire
-const form = document.getElementById('inscriptionForm');
-const modalOverlay = document.getElementById('modalOverlay');
-
-// Fonction de validation
-function validateForm() {
-    let isValid = true;
-    const errors = [];
-    
-    const requiredFields = form.querySelectorAll('[required]');
-    
-    requiredFields.forEach(field => {
-        const formGroup = field.closest('.form-group');
-        
-        if (!field.value.trim()) {
-            formGroup.classList.add('error');
-            isValid = false;
-            errors.push(`${field.previousElementSibling.textContent.replace(' *', '')}`);
-        } else {
-            if (field.type === 'email' && !isValidEmail(field.value)) {
-                formGroup.classList.add('error');
-                isValid = false;
-                errors.push('Email invalide');
-            } else if (field.type === 'date' && !isValidDate(field.value)) {
-                formGroup.classList.add('error');
-                isValid = false;
-                errors.push('Date invalide');
-            } else if (field.id === 'cni' && !isValidCNI(field.value)) {
-                formGroup.classList.add('error');
-                isValid = false;
-                errors.push('CNI invalide');
-            } else if (field.id === 'promotion' && !isValidYear(field.value)) {
-                formGroup.classList.add('error');
-                isValid = false;
-                errors.push('Année invalide');
-            } else {
-                formGroup.classList.remove('error');
-            }
-        }
-    });
-    
-    const telephone = document.getElementById('telephone');
-    if (telephone.value.trim() && !isValidPhone(telephone.value)) {
-        telephone.closest('.form-group').classList.add('error');
-        isValid = false;
-        errors.push('Téléphone invalide');
-    }
-    
-    return { isValid, errors };
-}
-
-function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function isValidDate(dateString) {
-    const date = new Date(dateString);
-    return date instanceof Date && !isNaN(date) && date < new Date();
-}
-
-function isValidCNI(cni) {
-    return cni.length >= 6;
-}
-
-function isValidYear(year) {
-    const currentYear = new Date().getFullYear();
-    const y = parseInt(year, 10);
-return /^[0-9]{4}$/.test(year) && y >= 1950 && y <= currentYear;
-}
-
-function isValidPhone(phone) {
-    return /^[+0-9\s\-()]{8,}$/.test(phone);
-}
-
-// Gestion de la soumission du formulaire
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Réinitialiser les messages d'erreur
-    form.querySelectorAll('.form-group').forEach(group => {
-        group.classList.remove('error');
-    });
-    
-    const validation = validateForm();
-    
-    if (validation.isValid) {
-        // Afficher un message de traitement
-        messageManager.info('⏳ Traitement', 'Votre inscription est en cours de traitement...');
-        
-        // Récupérer les données du formulaire
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
-        
-        // Simuler un délai de traitement
-        const WEBAPP_URL =
-    "https://script.google.com/macros/s/AKfycbywKK26zFzhSFSL21nlckOcFiA87uTW_r06apPLJEXlAVe58kUvv3SbNdbE_ZpCnLeu/exec";
-
-fetch(WEBAPP_URL, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-})
-.then(response => response.text())
-.then(result => {
-    console.log(result);
-    showSuccessModal(data);
-})
-.then(() => {
-    showSuccessModal(data);
-})
-.catch(error => {
-    console.error(error);
-    messageManager.error(
-        "Erreur",
-        "Impossible d'enregistrer l'inscription."
-    );
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('todayDate').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('recDate').value=new Date().toISOString().split('T')[0];
+    refresh();
 });
 
-// Afficher le modal de confirmation
-function showSuccessModal(data) {
-    const modalTitle = document.getElementById('modalTitle');
-    const modalMessage = document.getElementById('modalMessage');
-    const modalDetails = document.getElementById('modalDetails');
-    const refNumber = generateReferenceNumber();
-    
-    document.getElementById('referenceNumber').textContent = `#INS-${refNumber}`;
-    modalTitle.textContent = `Bienvenue, ${data.prenom} ${data.nom}!`;
-    modalMessage.textContent = 'Votre inscription a été enregistrée avec succès!';
-    
-    // Construire les détails
-    const detailsHtml = `
-        <div class="modal-detail-item">
-            <span class="modal-detail-label">📁 Filière:</span>
-            <span class="modal-detail-value">${getFiliereName(data.filiere)}</span>
-        </div>
-        <div class="modal-detail-item">
-            <span class="modal-detail-label">🎯 Option:</span>
-            <span class="modal-detail-value">${data.option}</span>
-        </div>
-        <div class="modal-detail-item">
-            <span class="modal-detail-label">📚 Semestre:</span>
-            <span class="modal-detail-value">${data.semestre}</span>
-        </div>
-        <div class="modal-detail-item">
-            <span class="modal-detail-label">📝 Type:</span>
-            <span class="modal-detail-value">${data.type === 'inscription' ? 'Première inscription' : 'Réinscription'}</span>
-        </div>
-        <div class="modal-detail-item">
-            <span class="modal-detail-label">✉️ Email:</span>
-            <span class="modal-detail-value">${data.email}</span>
-        </div>
-        <div class="modal-detail-item">
-            <span class="modal-detail-label">📅 Date:</span>
-            <span class="modal-detail-value">${new Date().toLocaleDateString('fr-FR')}</span>
-        </div>
-    `;
-    
-    modalDetails.innerHTML = detailsHtml;
-    
-    // Afficher le modal
-    modalOverlay.style.display = 'block';
-    
-    // Lancer l'effet confetti
-    launchConfetti();
-    
-    // Message de succès
-    messageManager.success(
-        '🎉 Inscription Réussie!',
-        'Vérifiez votre email pour les prochaines étapes.',
-        `Numéro de référence: <strong>#INS-${refNumber}</strong>`
-    );
-    
-    // Sauvegarder les données
-    saveInscriptionData(data, refNumber);
+function refresh(){
+    document.getElementById('navStudentCount').textContent=students.length;
+    document.getElementById('navModCount').textContent=modules.length;
+    updateDash();renderStudents();renderModules();renderSlots();renderSchedule();
+    loadRecordDropdowns();loadRecStudents();renderHistory();initStats();
 }
 
-function getFiliereName(code) {
-    const filieres = {
-        'SI': 'Soins Infirmiers',
-        'SF': 'Sage-Femme',
-        'TS': 'Techniques de Santé',
-        'RR': 'Rééducation et Réhabilitation',
-        'AMS': 'Assistance Médico-Sociale'
-    };
-    return filieres[code] || code;
+// ============================================================
+// NAVIGATION
+// ============================================================
+const PT={dashboard:['Tableau de bord','Vue d\'ensemble de la gestion des absences'],students:['Etudiants','Liste et gestion des étudiants'],modules:['Modules','Catalogue des modules enseignés'],schedule:['Plages horaires','Créneaux et emploi du temps'],record:['Enregistrer absence','Saisie des absences du jour'],history:['Historique','Toutes les absences enregistrées'],stats:['Statistiques','Analyses et indicateurs']};
+
+function go(p){
+    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+    document.getElementById('page-'+p).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    document.querySelector(`.nav-item[data-page="${p}"]`).classList.add('active');
+    document.getElementById('pageTitle').textContent=PT[p][0];
+    document.getElementById('pageSub').textContent=PT[p][1];
+    document.getElementById('sidebar').classList.remove('open');
+    if(p==='dashboard')updateDash();if(p==='students')renderStudents();if(p==='modules')renderModules();
+    if(p==='schedule'){renderSlots();renderSchedule();}if(p==='record'){loadRecordDropdowns();loadRecStudents();}
+    if(p==='history')renderHistory();if(p==='stats')initStats();
 }
 
-function generateReferenceNumber() {
-    return Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+// ============================================================
+// TOAST / MODAL
+// ============================================================
+function toast(msg,t='success'){
+    const ic={success:'fa-check-circle',error:'fa-exclamation-circle',info:'fa-info-circle'};
+    const d=document.createElement('div');d.className=`toast toast-${t}`;
+    d.innerHTML=`<i class="fas ${ic[t]}"></i>${msg}`;document.getElementById('toastBox').appendChild(d);
+    setTimeout(()=>d.remove(),3000);
 }
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));});
 
-function saveInscriptionData(data, refNumber) {
-    const inscription = {
-        ...data,
-        dateInscription: new Date().toLocaleString('fr-FR'),
-        numeroReference: refNumber
-    };
-    localStorage.setItem('derniere-inscription', JSON.stringify(inscription));
-}
+// ============================================================
+// HELPERS
+// ============================================================
+function fmtDate(d){return new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtSlot(id){const s=timeSlots.find(x=>x.id===id);return s?`${s.start}-${s.end} ${s.label}`:'—';}
+function getStuAbsCounts(){const c={};absences.forEach(a=>{c[a.sid]=(c[a.sid]||0)+1;});return Object.entries(c).map(([id,n])=>{const s=students.find(x=>x.id===+id);return{id:+id,count:n,name:s?`${s.fn} ${s.ln}`:'?'};});}
+function getModAbsCounts(){const c={};absences.forEach(a=>{c[a.mid]=(c[a.mid]||0)+1;});return c;}
+function absColor(n){return n>=5?'var(--danger)':n>=3?'var(--accent)':'var(--success)';}
+function absBg(n){return n>=5?'var(--danger-dim)':n>=3?'var(--accent-dim)':'var(--success-dim)';}
 
-function closeModal() {
-    modalOverlay.style.display = 'none';
-    form.reset();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+// ============================================================
+// DASHBOARD
+// ============================================================
+function updateDash(){
+    const alertN=getStuAbsCounts().filter(s=>s.count>3).length;
+    const rate=((absences.length/(students.length*60))*100).toFixed(1);
+    document.getElementById('dashStats').innerHTML=`
+        <div class="stat-card"><div class="s-icon" style="background:var(--accent-dim);color:var(--accent);"><i class="fas fa-users"></i></div><div class="s-val">${students.length}</div><div class="s-lbl">Etudiants inscrits</div></div>
+        <div class="stat-card"><div class="s-icon" style="background:var(--danger-dim);color:var(--danger);"><i class="fas fa-user-xmark"></i></div><div class="s-val">${absences.length}</div><div class="s-lbl">Absences totales</div></div>
+        <div class="stat-card"><div class="s-icon" style="background:var(--info-dim);color:var(--info);"><i class="fas fa-percent"></i></div><div class="s-val">${rate}%</div><div class="s-lbl">Taux d'absentéisme</div></div>
+        <div class="stat-card"><div class="s-icon" style="background:var(--purple-dim);color:var(--purple);"><i class="fas fa-triangle-exclamation"></i></div><div class="s-val">${alertN}</div><div class="s-lbl">Alertes (>3 abs.)</div></div>`;
 
-function printInscription() {
-    const inscription = JSON.parse(localStorage.getItem('derniere-inscription'));
-    if (inscription) {
-        const printContent = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>
-                    body { font-family: Arial, sans-serif; }
-                    .header { text-align: center; margin-bottom: 30px; }
-                    .header h1 { color: #006699; }
-                    .reference { background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-                    .details { margin-top: 20px; }
-                    .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #ddd; }
-                </style>
-            </head>
-            <body>
-                <div class="header">
-                    <h1>ISPITSM Marrakech</h1>
-                    <p>Confirmation d'Inscription</p>
-                </div>
-                <div class="reference">
-                    <p><strong>Numéro de Référence:</strong> #INS-${inscription.numeroReference}</p>
-                    <p><strong>Date d'Inscription:</strong> ${inscription.dateInscription}</p>
-                </div>
-                <div class="details">
-                    <h3>Informations Personnelles</h3>
-                    <div class="detail-row">
-                        <span>Nom:</span>
-                        <span>${inscription.nom}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Prénom:</span>
-                        <span>${inscription.prenom}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Email:</span>
-                        <span>${inscription.email}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Téléphone:</span>
-                        <span>${inscription.telephone || 'N/A'}</span>
-                    </div>
-                    <h3>Informations Académiques</h3>
-                    <div class="detail-row">
-                        <span>Filière:</span>
-                        <span>${getFiliereName(inscription.filiere)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Option:</span>
-                        <span>${inscription.option}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Semestre:</span>
-                        <span>${inscription.semestre}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Type:</span>
-                        <span>${inscription.type === 'inscription' ? 'Première inscription' : 'Réinscription'}</span>
-                    </div>
-                </div>
-            </body>
-            </html>
-        `;
-        
-        const printWindow = window.open('', '', 'height=600,width=800');
-        printWindow.document.write(printContent);
-        printWindow.document.close();
-        printWindow.print();
-    }
-}
+    const recent=[...absences].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
+    document.getElementById('dashRecentBody').innerHTML=recent.map(a=>{
+        const s=students.find(x=>x.id===a.sid);if(!s)return '';
+        const m=modules.find(x=>x.id===a.mid);const cc=CC[s.cls]||{bg:'rgba(255,255,255,.1)',fg:'#fff'};
+        const j=a.status==='justifié';
+        return `<tr><td><div class="flex-center"><div class="avatar avatar-sm" style="background:${cc.bg};color:${cc.fg};">${s.fn[0]}${s.ln[0]}</div><span style="font-weight:600;font-size:13px;">${s.fn} ${s.ln}</span></div></td><td style="font-size:12.5px;">${m?m.name:'—'}</td><td style="font-size:12px;color:var(--fg-muted);">${fmtSlot(a.slotId)}</td><td style="font-size:12.5px;color:var(--fg-muted);">${fmtDate(a.date)}</td><td style="font-size:12px;">${a.motive}</td><td><span class="badge" style="background:${j?'var(--success-dim)':'var(--danger-dim)'};color:${j?'var(--success)':'var(--danger)'};">${a.status}</span></td></tr>`;
+    }).join('');
 
-function downloadInscription() {
-    const inscription = JSON.parse(localStorage.getItem('derniere-inscription'));
-    if (inscription) {
-        const content = `
-CONFIRMATION D'INSCRIPTION
-ISPITSM Marrakech
-==================================================
-
-NUMÉRO DE RÉFÉRENCE: #INS-${inscription.numeroReference}
-DATE D'INSCRIPTION: ${inscription.dateInscription}
-
-INFORMATIONS PERSONNELLES
-==================================================
-Nom: ${inscription.nom}
-Prénom: ${inscription.prenom}
-Email: ${inscription.email}
-Téléphone: ${inscription.telephone || 'N/A'}
-CNI: ${inscription.cni}
-Nationalité: ${inscription.nationalite}
-
-INFORMATIONS ACADÉMIQUES
-==================================================
-Filière: ${getFiliereName(inscription.filiere)}
-Option: ${inscription.option}
-Semestre: ${inscription.semestre}
-Année Universitaire: ${inscription.anneeUniversitaire}
-Type d'Inscription: ${inscription.type === 'inscription' ? 'Première inscription' : 'Réinscription'}
-
-==================================================
-© 2025-2026 ISPITSM Marrakech
-        `;
-        
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `inscription-${inscription.numeroReference}.txt`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-    }
-}
-
-// Effet Confetti
-function launchConfetti() {
-    const confettiCount = 50;
-    const colors = ['#28a745', '#006699', '#ffc107', '#17a2b8', '#dc3545'];
-    
-    for (let i = 0; i < confettiCount; i++) {
-        setTimeout(() => {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * window.innerWidth + 'px';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.animation = `confetti-fall ${2 + Math.random() * 1}s ease-in forwards`;
-            document.body.appendChild(confetti);
-            
-            setTimeout(() => confetti.remove(), 3000);
-        }, i * 30);
-    }
-}
-
-// Validation en temps réel
-form.querySelectorAll('input, select, textarea').forEach(field => {
-    field.addEventListener('blur', function() {
-        const formGroup = this.closest('.form-group');
-        
-        if (this.hasAttribute('required') && !this.value.trim()) {
-            formGroup.classList.add('error');
-        } else if (this.type === 'email' && this.value.trim() && !isValidEmail(this.value)) {
-            formGroup.classList.add('error');
-        } else {
-            formGroup.classList.remove('error');
-        }
-    });
-    
-    field.addEventListener('focus', function() {
-        this.closest('.form-group').classList.remove('error');
-    });
-});
-
-// Fermer le modal en cliquant en dehors
-modalOverlay.addEventListener('click', function(e) {
-    if (e.target === modalOverlay) {
-        closeModal();
-    }
-});
-
-// Message de bienvenue au chargement
-window.addEventListener('load', function() {
-    messageManager.success(
-        '👋 Bienvenue!',
-        'Remplissez le formulaire ci-dessous pour procéder à votre inscription.',
-        'Tous les champs marqués d\'un astérisque (*) sont obligatoires.'
-    );
-});
-</script>
-
-
-</body></html>
+    // Charts
+    const months=['Jan','Fév','Mar','Avr','Mai','Jun'];const md=[0,0,0,0,0,0];
+    absences.forEach(a=>{const m=new Date(a.date).getMonth();if(m>=0&&m<6)md[m]++;});
+    if(charts.month)charts.month.destroy();
+    charts.month=new Chart(document.getElementById('chartMonth'),{type:'bar',data:{labels:months,datasets:[{data:md,backgroundColor:'rgba(232,168,62,0.55)',borderColor:'#e8a83e',borderWidth:2,borderRadius:
